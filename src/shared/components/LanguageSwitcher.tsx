@@ -1,25 +1,18 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 import React from "react";
+import useLanguageSwitcher from "../hooks/useLanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 export default function LanguageSwitcher() {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const currentLocale = pathname.startsWith("/es") ? "es" : "en";
-
-  const changeLanguage = (locale: string) => {
-    const newPath = pathname.replace(`/${currentLocale}`, `/${locale}`);
-    router.push(newPath);
-  };
+  const { currentLocale, changeLanguage } = useLanguageSwitcher();
 
   const t = useTranslations("HomePage");
+
   return (
-    <div className="flex flex-col items-center gap-2 my-4 w-full  md:flex-row ">
+    <div className="flex flex-col items-center gap-2 my-4 w-full md:flex-row">
       <button
+        type="button"
         onClick={() => changeLanguage("es")}
         className={`px-4 py-2 rounded-lg font-bold transition-shadow 
           ${currentLocale === "es" ? "shadow-lg bg-gray-100" : "bg-gray-300"}`}
@@ -27,6 +20,7 @@ export default function LanguageSwitcher() {
         {t("translationES")}
       </button>
       <button
+        type="button"
         onClick={() => changeLanguage("en")}
         className={`px-4 py-2 rounded-lg font-bold transition-shadow 
           ${currentLocale === "en" ? "shadow-lg bg-gray-100" : "bg-gray-300"}`}
