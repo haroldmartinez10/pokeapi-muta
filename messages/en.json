@@ -1,0 +1,9 @@
+{
+  "HomePage": {
+    "title": "Poke Api",
+    "description": "Discover and create new Pokémon cards.",
+    "placeholder": "Search for a Pokémon",
+    "translationES": "Spanish",
+    "translationEN": "English"
+  }
+}
