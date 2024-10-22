@@ -1,33 +1,6 @@
 import axios from "axios";
 
-export interface PokemonAbility {
-  ability: {
-    name: string;
-  };
-}
-
-export interface PokemonType {
-  type: {
-    name: string;
-  };
-}
-
-export interface PokemonSprite {
-  front_default: string;
-  back_default?: string;
-}
-
-export interface PokemonForm {
-  name: string;
-}
-
-export interface PokemonApiResponse {
-  name: string;
-  sprites: PokemonSprite;
-  abilities: PokemonAbility[];
-  types: PokemonType[];
-  forms: PokemonForm[];
-}
+import { PokemonApiResponse } from "./types/PokemonApiResponse";
 
 export const fetchPokemons = async (
   currentPage: number,
@@ -83,10 +56,8 @@ export const fetchPokemonByName = async (
     );
     return response.data;
   } catch (error) {
-    // Manejo del error
     console.error(`Error fetching Pokémon: ${name}`, error);
 
-    // Puedes lanzar el error o manejarlo de otra manera
     throw new Error(`No se pudo obtener el Pokémon: ${name}`);
   }
 };

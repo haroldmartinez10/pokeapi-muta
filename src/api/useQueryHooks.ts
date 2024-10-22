@@ -3,8 +3,8 @@ import {
   fetchPokemonById,
   fetchPokemonByName,
   fetchPokemons,
-  PokemonApiResponse,
 } from "./pokemonApi";
+import { PokemonApiResponse } from "./types/PokemonApiResponse";
 
 type UseGetPokemonsParams = {
   currentPage: number;

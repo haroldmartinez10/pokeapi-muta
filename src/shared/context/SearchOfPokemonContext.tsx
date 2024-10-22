@@ -35,7 +35,6 @@ export const SearchOfPokemonProvider: React.FC<
   );
 };
 
-// Exportar el contexto para que pueda ser utilizado en otros componentes
 export const useSearchOfPokemonContext = () => {
   const context = React.useContext(SearchOfPokemonContext);
   if (context === undefined) {
