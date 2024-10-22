@@ -34,7 +34,7 @@ const PokemonPage = () => {
 
   return (
     <>
-      <div className="w-full h-screen flex justify-center items-center px-4 md:px-0">
+      <div className="w-full flex justify-center items-center px-4 md:px-0 mt-14">
         <div className="w-full max-w-md cursor-pointer">
           {isLoading ? (
             <div className="flex flex-col justify-center items-center">
