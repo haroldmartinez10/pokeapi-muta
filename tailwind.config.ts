@@ -8,7 +8,7 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/shared/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class", // add this line
+  darkMode: "class",
   theme: {
     extend: {},
   },

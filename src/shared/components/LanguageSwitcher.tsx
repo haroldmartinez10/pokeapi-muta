@@ -10,7 +10,7 @@ export default function LanguageSwitcher() {
   const t = useTranslations("HomePage");
 
   return (
-    <div className="flex flex-col items-center gap-2 my-4 w-full md:flex-row">
+    <div className="flex gap-x-3">
       <button
         type="button"
         onClick={() => changeLanguage("es")}
