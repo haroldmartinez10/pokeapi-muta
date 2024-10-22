@@ -74,12 +74,19 @@ export const fetchPokemonById = async (
   );
   return response.data;
 };
-
 export const fetchPokemonByName = async (
   name: string
 ): Promise<PokemonApiResponse> => {
-  const response = await axios.get<PokemonApiResponse>(
-    `https://pokeapi.co/api/v2/pokemon/${name}`
-  );
-  return response.data;
+  try {
+    const response = await axios.get<PokemonApiResponse>(
+      `https://pokeapi.co/api/v2/pokemon/${name}`
+    );
+    return response.data;
+  } catch (error) {
+    // Manejo del error
+    console.error(`Error fetching Pokémon: ${name}`, error);
+
+    // Puedes lanzar el error o manejarlo de otra manera
+    throw new Error(`No se pudo obtener el Pokémon: ${name}`);
+  }
 };

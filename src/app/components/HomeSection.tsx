@@ -34,7 +34,7 @@ const HomeSection = () => {
     pokemonsPerPage,
   });
 
-  const { data } = useGetPokemonByName(debounceSearch || "");
+  const { data, isFetching } = useGetPokemonByName(debounceSearch || "");
   const isSearching = debounceSearch?.length > 0;
 
   const pokemonName = data?.forms[0]?.name || "";
@@ -79,7 +79,11 @@ const HomeSection = () => {
 
         <div className="w-full flex justify-center mt-4">
           <div className="w-7/12">
-            <SearchInput name="search-input" placeholder={t("placeholder")} />
+            <SearchInput
+              loading={isFetching}
+              name="search-input"
+              placeholder={t("placeholder")}
+            />
           </div>
         </div>
 

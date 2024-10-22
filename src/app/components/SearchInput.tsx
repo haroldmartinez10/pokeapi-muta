@@ -1,3 +1,4 @@
+import Spinner from "@/shared/components/Spinner";
 import SearchSvg from "@/shared/svg/SearchSvg";
 import React, { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
@@ -5,11 +6,13 @@ import { useFormContext } from "react-hook-form";
 interface SearchInputProps {
   placeholder?: string;
   name: string;
+  loading?: boolean; // Agregar la prop loading
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
   placeholder = "Buscar un Pokémon",
   name,
+  loading = false,
 }) => {
   const { register } = useFormContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -37,6 +40,11 @@ const SearchInput: React.FC<SearchInputProps> = ({
           required
           style={{ outline: "black" }}
         />
+        {loading && (
+          <div className="absolute right-4">
+            <Spinner />
+          </div>
+        )}
       </div>
     </div>
   );
