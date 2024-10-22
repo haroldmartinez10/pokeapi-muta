@@ -1,18 +1,15 @@
 import React from "react";
 import Image from "next/image";
 
-// Tipo para las habilidades, aquí se puede expandir en el futuro si es necesario
 type Ability = string;
 
-// Props del componente PokemonCard
 type PokemonCardProps = {
-  imageSrc: string; // URL de la imagen del Pokémon
-  name: string; // Nombre del Pokémon
-  types: string[]; // Tipos del Pokémon
-  abilities: Ability[]; // Habilidades del Pokémon
+  imageSrc: string;
+  name: string;
+  types: string[];
+  abilities: Ability[];
 };
 
-// Mapa de tipos a colores
 const typeColors: Record<string, string> = {
   normal: "#A8A77A",
   fire: "#EE8130",
@@ -41,38 +38,41 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   abilities,
 }) => {
   return (
-    <div className="font-sans bg-white rounded-3xl overflow-hidden border-[15px] border-[#4B5563] w-[100%] h-[450px] ">
+    <div className="font-sans bg-white rounded-3xl overflow-hidden border-8 border-[#4B5563] w-full h-[450px] shadow-lg transition-transform transform hover:scale-105">
       <div className="flex flex-col items-center">
-        <div>
+        <div className="relative w-48 h-48 mb-4">
           <Image
             src={imageSrc}
             alt={name}
             quality={100}
-            width={200}
-            height={200}
+            layout="fill"
+            objectFit="contain"
           />
         </div>
-      </div>
-      <section className="bg-[#E5E7EB] h-full p-4 flex flex-col gap-y-2">
-        <div className="flex gap-x-2">
-          <h2 className="text-2xl font-bold capitalize">{name}</h2>
-          {types.map((type, index) => (
+        <h2 className="text-3xl font-extrabold capitalize text-[#4B5563] text-center mb-2">
+          {name}
+        </h2>
+        <div className="flex gap-x-2 justify-center mb-2">
+          {types?.map((type, index) => (
             <h2
               key={index}
-              className="text-white font-bold rounded-full px-2 py-1"
+              className="text-white font-bold rounded-full px-3 py-1"
               style={{
-                backgroundColor: typeColors[type] || "#374151", // Color de fondo basado en el tipo
+                backgroundColor: typeColors[type] || "#374151",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
               }}
             >
               {type}
             </h2>
           ))}
         </div>
-        <div className="grid grid-cols-3 gap-2 items">
-          {abilities.map((ability, index) => (
+      </div>
+      <section className="bg-[#E5E7EB] h-full p-4 flex flex-col gap-y-2">
+        <div className="grid grid-cols-3 gap-2">
+          {abilities?.map((ability, index) => (
             <div
               key={index}
-              className="bg-[#F3F4F6] font-bold text-[#374151] p-2 rounded-xl text-sm text-center"
+              className="bg-[#F3F4F6] font-bold text-[#374151] p-2 rounded-lg text-sm text-center shadow-md transition-transform transform hover:scale-105"
             >
               {ability}
             </div>

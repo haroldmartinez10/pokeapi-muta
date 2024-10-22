@@ -5,5 +5,20 @@
     "placeholder": "Buscar un Pokémon",
     "translationES": "Español",
     "translationEN": "Inglés"
+  },
+  "Pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página",
+    "of": "de"
+  },
+  "Card": {
+    "goBack": "Regresar",
+    "showFront": "Mostrar Frente",
+    "showBack": "Mostrar Reverso"
+  },
+  "Errors": {
+    "notPokemonFound": "No se encontró ningún Pokémon.",
+    "errorLoadPokemon": "Error al cargar Pokémon."
   }
 }

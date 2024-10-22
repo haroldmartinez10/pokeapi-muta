@@ -14,6 +14,7 @@ export interface PokemonType {
 
 export interface PokemonSprite {
   front_default: string;
+  back_default?: string;
 }
 
 export interface PokemonForm {
@@ -28,12 +29,11 @@ export interface PokemonApiResponse {
   forms: PokemonForm[];
 }
 
-// Función para obtener los Pokémon con paginación
 export const fetchPokemons = async (
   currentPage: number,
   pokemonsPerPage: number
 ): Promise<PokemonApiResponse[]> => {
-  const offset = (currentPage - 1) * pokemonsPerPage; // Calcular el desplazamiento
+  const offset = (currentPage - 1) * pokemonsPerPage;
   const response = await axios.get<{
     results: { url: string; name: string }[];
   }>(

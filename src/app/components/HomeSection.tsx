@@ -1,3 +1,4 @@
+"use client";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import SearchInput from "./SearchInput";
@@ -6,9 +7,17 @@ import PokemonCard from "./PokemonCard";
 import { useGetPokemonByName, useGetPokemons } from "@/api/useQueryHooks";
 import { useFormContext } from "react-hook-form";
 import { useDebounce } from "@uidotdev/usehooks";
+import Pagination from "./Pagination";
+import { motion } from "framer-motion";
+import { useParams, useRouter } from "next/navigation";
+import Spinner from "@/shared/components/Spinner";
 
 const HomeSection = () => {
   const t = useTranslations("HomePage");
+
+  const e = useTranslations("Errors");
+  const params = useParams();
+  const { locale } = params;
 
   const { watch } = useFormContext();
   const currentSearch = watch("search-input");
@@ -48,52 +57,79 @@ const HomeSection = () => {
     }
   };
 
+  const router = useRouter();
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: () => ({
+      opacity: 1,
+      y: 0,
+    }),
+  };
+
   return (
     <div className="flex items-center justify-center">
-      {isSearching ? (
-        <div className="flex flex-col items-center w-full">
-          <div className="mt-6 w-full">
+      <div className="flex-col justify-center items-center w-full">
+        <div className="w-full flex flex-col items-center">
+          <p className="text-6xl text-[#75747E] font-bold text-center mt-9">
+            {t("title")}
+          </p>
+          <p className="text-4xl flex mt-4 text-center ">{t("description")}</p>
+        </div>
+
+        <div className="w-full flex justify-center mt-4">
+          <div className="w-7/12">
             <SearchInput name="search-input" placeholder={t("placeholder")} />
           </div>
-          <div className="w-full xl:w-4/12 mt-4 px-4">
-            <PokemonCard
-              name={pokemonName}
-              imageSrc={pokemonImageSrc}
-              types={pokemonTypes}
-              abilities={pokemonAbilities}
-            />
-          </div>
         </div>
-      ) : (
-        <div className="flex-col justify-center items-center w-full">
-          <div className="w-full flex flex-col items-center">
-            <p className="text-6xl text-[#75747E] font-bold text-center mt-9">
-              {t("title")}
-            </p>
-            <p className="text-4xl flex mt-4 text-center ">
-              {t("description")}
-            </p>
-          </div>
 
-          <div className="w-full flex justify-center mt-4">
-            <div className="w-7/12">
-              <SearchInput name="search-input" placeholder={t("placeholder")} />
-            </div>
+        {isSearching && (
+          <div className="flex flex-col items-center w-full mt-4">
+            {pokemonName ? (
+              <div
+                onClick={() => {
+                  router.push(`/${locale}/${pokemonName}`);
+                }}
+                className="w-full xl:w-3/12 md:w-6/12 px-4 cursor-pointer"
+              >
+                <PokemonCard
+                  name={pokemonName}
+                  imageSrc={pokemonImageSrc}
+                  types={pokemonTypes}
+                  abilities={pokemonAbilities}
+                />
+              </div>
+            ) : (
+              <p>{e("notPokemonFound")}</p>
+            )}
           </div>
+        )}
 
+        {!isSearching ? (
           <div className="mt-6 flex justify-center items-center mb-6">
-            <div className="">
-              <LanguageSwitcher />
-            </div>
+            <LanguageSwitcher />
           </div>
+        ) : null}
 
-          <div className="flex-col w-full mt-6 lg:mt-0">
-            <div className="flex flex-col gap-4 items-center justify-center px-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                {isLoading && <p>Cargando Pokémon...</p>}
-                {isError && <p>Error al cargar los Pokémon.</p>}
-                {allPokemons.map((pokemon) => (
-                  <div className="flex justify-center" key={pokemon.name}>
+        <div className="flex-col w-full mt-6 lg:mt-0">
+          <div className="flex flex-col gap-4 items-center justify-center px-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              {isLoading && <Spinner />}
+              {isError && <p>{e("errorLoadPokemon")}</p>}
+              {!isSearching &&
+                allPokemons.map((pokemon, index) => (
+                  <motion.div
+                    key={pokemon.name}
+                    className="flex justify-center cursor-pointer"
+                    initial="hidden"
+                    whileInView="visible"
+                    variants={cardVariants}
+                    custom={index}
+                    viewport={{ once: true }}
+                    onClick={() => {
+                      router.push(`/${locale}/${pokemon.name}`);
+                    }}
+                  >
                     <PokemonCard
                       name={pokemon.name}
                       imageSrc={pokemon.sprites.front_default}
@@ -102,33 +138,22 @@ const HomeSection = () => {
                         (ability) => ability.ability.name
                       )}
                     />
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
             </div>
-
-            <div className="flex justify-between mt-4">
-              <button
-                type="button"
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-              >
-                Anterior
-              </button>
-              <span>
-                Página {currentPage} de {totalPages}
-              </span>
-              <button
-                type="button"
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >
-                Siguiente
-              </button>
+          </div>
+          <div className="w-full flex justify-center">
+            <div className="w-full xl:w-3/12 md:w-6/12 lg:w-5/12 mb-4">
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                handleNextPage={handleNextPage}
+                handlePrevPage={handlePrevPage}
+              />
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -17,7 +17,6 @@ interface ISubmitModulesForm<T> {
   values?: any;
   className?: string;
 }
-// million-ignore
 export function BasicFormProvider<T>({
   children,
   submit,
@@ -26,7 +25,6 @@ export function BasicFormProvider<T>({
   values,
   schema,
 }: ISubmitModulesForm<T>) {
-  // hooks
   const currentMethods = useForm({
     defaultValues: defaultValue ?? {},
     values: values,
