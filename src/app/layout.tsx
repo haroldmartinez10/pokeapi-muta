@@ -18,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryClientProvider client={queryClient}>
-        <body className={`${inter.variable} antialiased bg-[#E9E7FC]`}>
-          {children}
-        </body>
+        <body className={`${inter.variable} antialiased `}>{children}</body>
       </QueryClientProvider>
     </html>
   );

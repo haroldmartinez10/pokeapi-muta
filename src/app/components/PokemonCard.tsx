@@ -40,15 +40,14 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   return (
     <div className="font-sans bg-white rounded-3xl overflow-hidden border-8 border-[#4B5563] w-full h-[450px] shadow-lg transition-transform transform hover:scale-105">
       <div className="flex flex-col items-center">
-        <div className="relative w-48 h-48 mb-4">
-          <Image
-            src={imageSrc}
-            alt={name}
-            quality={100}
-            layout="fill"
-            objectFit="contain"
-          />
-        </div>
+        <Image
+          src={imageSrc}
+          alt={name}
+          quality={100}
+          width={200}
+          height={200}
+        />
+
         <h2 className="text-3xl font-extrabold capitalize text-[#4B5563] text-center mb-2">
           {name}
         </h2>
